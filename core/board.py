@@ -14,20 +14,22 @@ class Board:
         try:
             move=chess.Move.from_uci(uci)
         except chess.InvalidMoveError:
-            print("Invalid! Please Enter correct UCI string.")
+            return False
+        except ValueError:
+            return False
         if(move in self.board.legal_moves):
             self.board.push(move)
-            print("Legal Move")
+            return True
         else:
-            print("Illegal Move")
+            return False
         
             
     def undo_move(self):
         try:
             self.board.pop()
-            print("Successful Undo Operation Performed!")
+            return True
         except IndexError:
-            print("No chess history exists! Play a move first.")
+            return False
 
     def get_fen(self):
         return self.board.fen()
@@ -36,13 +38,3 @@ class Board:
         self.board=chess.Board(fen)
         
 
-"""
-
-
-    
-
-    
-        print(Board1.move_stack)
-
-
-"""
